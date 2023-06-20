@@ -1,0 +1,216 @@
+USE serverlessdb
+GO
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = <enter very strong password here>
+
+
+-- create credentials for containers in our demo storage account
+CREATE DATABASE SCOPED CREDENTIAL sqlondemand
+WITH IDENTITY='SHARED ACCESS SIGNATURE',  
+SECRET = 'sv=2018-03-28&ss=bf&srt=sco&sp=rl&st=2019-10-14T12%3A10%3A25Z&se=2061-12-31T12%3A10%3A00Z&sig=KlSU2ullCscyTS0An0nozEpo4tO5JAgGBvw%2FJX2lguw%3D'
+GO;
+CREATE EXTERNAL DATA SOURCE SqlOnDemandDemo WITH (
+    LOCATION = 'https://sqlondemandstorage.blob.core.windows.net',
+    CREDENTIAL = demoCredential
+);
+
+
+CREATE EXTERNAL DATA SOURCE sqlOnDemandDemo WITH(
+LOCATION = 'https://acahad-secondary.dfs.core.windows.net/',
+CREDENTIAL = democredentials
+);
+------------------------------------------------------------------------------
+CREATE DATABASE <name>
+COLLATE LATIN1_General_100_BIN2_UTF8;
+
+USE<databasename>
+GO
+
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = <enter very strong password here>
+
+CREATE DATABASE SCOPED CREDENTIAL sqlondemand
+WITH 
+IDENTITY='SHARED ACCESS SIGNATURE',  
+SECRET = 'sv=2018-03-28&ss=bf&srt=sco&sp=rl&st=2019-10-14T12%3A10%3A25Z&se=2061-12-31T12%3A10%3A00Z&sig=KlSU2ullCscyTS0An0nozEpo4tO5JAgGBvw%2FJX2lguw%3D'
+GO
+
+CREATE DATABASE SCOPED CREDENTIAL [WorkspaceIdentity] 
+WITH 
+IDENTITY = 'Managed Identity';
+GO
+
+CREATE EXTERNAL DATA SOURCE OnDemandDemo 
+WITH
+(
+LOCATION = 'https://acahad-secondary.dfs.core.windows.net/',
+CREDENTIAL = ManagedIdentity
+);
+
+
+USE <databasename>
+GO
+
+CREATE EXTERNAL FILE FORMAT census_file_format
+WITH
+(  
+    FORMAT_TYPE = PARQUET,
+    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'
+)	
+
+---------------------------------------
+CETAS code
+
+CREATE SCHEMA AhadTaxi
+
+
+CREATE EXTERNAL TABLE NYCTaxi.PassengersNew
+WITH
+(
+    LOCATION = 'fsahad/ahadfiles/',
+    DATA_SOURCE = Demanded,
+    FILE_FORMAT = Parquetformat
+)
+AS
+    SELECT PassengerCount,
+        SUM(TripDistanceMiles) as SumTripDistance,
+        AVG(TripDistanceMiles) as avgTripDistance
+    FROM
+        OPENROWSET
+        (
+            BULK 'https://acahad.dfs.core.windows.net/fsahad/NYCTripSmall.parquet',
+            FORMAT = 'PARQUET'
+        )
+    AS [rows]
+       WHERE TripDistanceMiles > 0 AND PassengerCount > 0
+       GROUP BY PassengerCount
+GO
+-----------------------------------------------------------------------------------------
+create serverless sql pool with external sources
+
+CREATE DATABASE toolkit
+COLLATE LATIN1_General_100_BIN2_UTF8;
+
+USE toolkit
+GO
+
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'AhadSanji@Norton12345'
+
+
+
+
+--  CREATE DATABASE SCOPED CREDENTIAL anysql
+--  WITH 
+--  IDENTITY='SHARED ACCESS SIGNATURE',  
+--  SECRET = 'sv=2018-03-28&ss=bf&srt=sco&sp=rl&st=2019-10-14T12%3A10%3A25Z&se=2061-12-31T12%3A10%3A00Z&sig=KlSU2ullCscyTS0An0nozEpo4tO5JAgGBvw%2FJX2lguw%3D'
+GO
+
+CREATE DATABASE SCOPED CREDENTIAL NitrogenIdentity 
+WITH 
+    IDENTITY = 'Managed Identity';
+GO
+
+CREATE EXTERNAL DATA SOURCE Demanded 
+WITH
+(
+    LOCATION = 'https://acahad.dfs.core.windows.net/',
+    CREDENTIAL = NitrogenIdentity 
+);
+
+USE toolkit
+GO
+
+CREATE EXTERNAL FILE FORMAT Parquetformat
+WITH
+(  
+    FORMAT_TYPE = PARQUET,
+    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'
+)
+
+-----------------------------------------------------------------------
+CTAS code
+
+CREATE TABLE [dbo].[employees]
+(
+    empID int NOT NULL,
+    empName NVARCHAR(50),
+    gender NVARCHAR(10)
+)
+WITH
+(
+    DISTRIBUTION = HASH (empID),
+    CLUSTERED COLUMNSTORE INDEX
+)
+GO
+INSERT INTO dbo.employees VALUES(1,'ahad','male')
+INSERT INTO dbo.employees VALUES(2,'Sammy','female')
+INSERT INTO dbo.employees VALUES(3,'abu','male')
+
+SELECT * FROM dbo.employees;
+=---------------------------------------------------------------------------
+CTAS ROUND_ROBIN code
+
+CREATE TABLE [dbo].[employees2]
+(
+    empID int NOT NULL,
+    empName NVARCHAR(50),
+    gender NVARCHAR(10)
+)
+WITH(
+    HEAP,
+        DISTRIBUTION = ROUND_ROBIN
+)
+---------------------------------------------------------------------------
+to load the output into a new table
+
+CREATE TABLE [dbo].[FactInternetSales_new]
+WITH
+(
+ DISTRIBUTION = ROUND_ROBIN
+ ,CLUSTERED COLUMNSTORE INDEX
+)
+AS
+SELECT  *
+FROM    [dbo].[FactInternetSales];	
+
+SELECT *
+INTO    [dbo].[FactInternetSales_new]
+FROM    [dbo].[FactInternetSales]
+------------------------------------------------------
+using CTAS
+
+CREATE TABLE dbo.EMPLOYEESNEW1
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	CLUSTERED COLUMNSTORE INDEX
+)
+AS
+SELECT * FROM dbo.employees
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

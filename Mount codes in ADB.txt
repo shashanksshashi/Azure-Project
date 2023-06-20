@@ -1,0 +1,27 @@
+dbutils.fs.mount(
+  source = "wasbs://<container-name>@<storage-account-name>.blob.core.windows.net",
+  mount_point = "/mnt/<mount-name>",
+  extra_configs = {"<conf-key>":dbutils.secrets.get(scope = "<scope-name>", key = "<key-name>")})
+
+
+
+dbutils.fs.mount(
+  source = "wasbs://<container-name>@<storage-account-name>.blob.core.windows.net",
+  mount_point = "/mnt/<mount-name>",
+  extra_configs = {"fs.azure.account.key.<storage-account-name>.blob.core.windows.net":dbutils.secrets.get(scope = "<scope-name>", key = "<key-name>")})
+
+df code1
+
+df=spark.read.format('csv').option("header","True").option("inferschema","True"). load('/mnt/blobinput')
+display(df)
+
+
+
+dbutils.fs.cp("/mnt/blobinput/moviesDB.csv","/mnt/blobinput/data/moviesDB.csv")
+
+<conf-key> can be either fs.azure.account.key.<storage-account-name>.blob.core.windows.net or fs.azure.sas.<container-name>.<storage-account-name>.blob.core.windows.net
+
+
+https://docs.databricks.com/storage/wasb-blob.html#language-python
+
+SAS/ACCESS Interface to Spark has been recently loaded with capabilities with exclusive support to Databricks clusters

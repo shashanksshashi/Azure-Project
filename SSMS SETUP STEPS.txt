@@ -1,0 +1,12 @@
+STEPS TO FOLLOW FOR SQL SERVER:-
+
+1.https://www.microsoft.com/en-in/sql-server/sql-server-downloads
+2. Scroll Down and click on Download Now UNDER Express 
+3. exe file will download into your system, open it and it will ask for administrative priviledges, click on YES
+4. Choose BASIC and then click on ACCEPT, later it will show the path and then click on INSTALL and you will see Express Edition window installing.
+5. Once successfully installed you will see CONNCETION STRING,SQL SERVER INSTALL LOG FOLDER,INSTALLATION MEDIA FOLDER,INSTALLATION RESOURCE FOLDER.
+6. INSTALL SSMS
+You will be redirected to (https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16) this link.
+7. Choose Free Downlaod for SQL Server Management Studio(SSMS)19.0.2 and it will again download the .exe file into your downloads(give administrative priviledges and click on YES)
+8. You will get an Installation Wizard for Microsoft SSMS with Azure Data Studio and click on  INSTALL.
+Once Successfully installed click on CLOSE.

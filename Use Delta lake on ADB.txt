@@ -1,0 +1,93 @@
+1.  rm -r dp-203 -f
+ git clone https://github.com/MicrosoftLearning/dp-203-azure-data-engineer dp-203
+
+2. cd dp-203/Allfiles/labs/25
+ ./setup.ps1
+
+Use Resource-https://github.com/MicrosoftLearning/dp-203-azure-data-engineer/raw/master/Allfiles/labs/25/Delta-Lake.ipynb
+
+Creating a Delta Lake table from a dataframe
+
+
+*Load a file into a dataframe
+df = spark.read.load('/data/mydata.csv', format='csv', header=True)
+
+*Save the dataframe as a delta table
+delta_table_path = "/delta/mydata"
+df.write.format("delta").save(delta_table_path)
+
+*the contents of a dataframe by using the overwrite mode(python)
+new_df.write.format("delta").mode("overwrite").save(delta_table_path)
+
+*You can also add rows from a dataframe to an existing table by using the append mode
+new_rows_df.write.format("delta").mode("append").save(delta_table_path)
+
+Making conditional updates
+
+from delta.tables import *
+from pyspark.sql.functions import *
+
+Create a deltaTable object
+deltaTable = DeltaTable.forPath(spark, delta_table_path)
+
+Update the table (reduce price of accessories by 10%)
+deltaTable.update(
+    condition = "Category == 'Accessories'",
+    set = { "Price": "Price * 0.9" })
+
+Querying a previous version of a table
+
+df = spark.read.format("delta").option("versionAsOf", 0).load(delta_table_path)
+
+specify a timestamp by using the timestampAsOf option
+
+df = spark.read.format("delta").option("timestampAsOf", '2022-01-01').load(delta_table_path)
+
+Creating catalog tables(python)
+
+Save a dataframe as a managed table
+df.write.format("delta").saveAsTable("MyManagedTable")
+
+specify a path option to save as an external table
+df.write.format("delta").option("path", "/mydata").saveAsTable("MyExternalTable")
+
+Creating a catalog table using SQL
+
+spark.sql("CREATE TABLE MyExternalTable USING DELTA LOCATION '/mydata'")
+
+SQL support in Spark to run the statement
+
+%sql
+
+CREATE TABLE MyExternalTable
+USING DELTA
+LOCATION '/mydata'
+
+Defining the table schema
+
+%sql
+
+CREATE TABLE ManagedSalesOrders
+(
+    Orderid INT NOT NULL,
+    OrderDate TIMESTAMP NOT NULL,
+    CustomerName STRING,
+    SalesTotal FLOAT NOT NULL
+)
+USING DELTA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

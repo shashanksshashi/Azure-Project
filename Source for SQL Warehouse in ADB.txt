@@ -1,0 +1,12 @@
+https://raw.githubusercontent.com/MicrosoftLearning/dp-203-azure-data-engineer/master/Allfiles/labs/26/data/products.csv
+
+ SELECT ProductID, ProductName, Category
+ FROM adventureworks.products; 
+
+
+-------------------------------------------------------------------------------------
+ rm -r dp-203 -f
+ git clone https://github.com/MicrosoftLearning/dp-203-azure-data-engineer dp-203
+
+ cd dp-203/Allfiles/labs/26
+ ./setup.ps1 (give region as well)

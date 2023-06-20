@@ -1,0 +1,170 @@
+CREATE TABLE [dbo].[TotalSale] (
+    [id] [int] NOT NULL
+    ,[SalePersonFName] [varchar](100) NULL
+    ,[SalePersonLName] [varchar](100) NULL
+    ,[ProductName] [varchar](100) NULL
+    ,[ItemsSold] [int] NULL
+    ,[SoldPrice] [float] NULL
+    ,[SoldDate] [date] NULL
+    ,[City] [varchar](100) NULL
+    ,[State] [varchar](100) NULL
+    ,[Country] [varchar](100) NULL
+    ,[Region] [varchar](100) NULL
+    )
+
+INSERT [dbo].[TotalSale] (
+    [id]
+    ,[SalePersonFName]
+    ,[SalePersonLName]
+    ,[ProductName]
+    ,[ItemsSold]
+    ,[SoldPrice]
+    ,[SoldDate]
+    ,[City]
+    ,[State]
+    ,[Country]
+    ,[Region]
+    )
+VALUES (
+    1
+    ,N'Aamir'
+    ,N'Shahzad'
+    ,N'TV'
+    ,1
+    ,700
+    ,CAST(N'2015-07-15' AS DATE)
+    ,N'Charlotte'
+    ,N'NC'
+    ,N'USA'
+    ,N'North America'
+    )
+    ,(
+    2
+    ,N'M'
+    ,N'Raza'
+    ,N'Cell Phone'
+    ,2
+    ,800
+    ,CAST(N'2015-07-15' AS DATE)
+    ,N'Charlotte'
+    ,N'NC'
+    ,N'USA'
+    ,N'North America'
+    )
+    ,(
+    3
+    ,N'Christy'
+    ,N'Ladson'
+    ,N'TV'
+    ,3
+    ,1600
+    ,CAST(N'2015-04-02' AS DATE)
+    ,N'High Point'
+    ,N'NC'
+    ,N'USA'
+    ,N'North America'
+    )
+    ,(
+    4
+    ,N'John'
+    ,N'Rivers'
+    ,N'Laptop'
+    ,5
+    ,2400
+    ,CAST(N'2014-03-09' AS DATE)
+    ,N'Jersey City'
+    ,N'NJ'
+    ,N'USA'
+    ,N'North America'
+    )
+    ,(
+    5
+    ,N'Najaf'
+    ,N'Ali'
+    ,N'Computer'
+    ,1
+    ,300
+    ,CAST(N'2015-06-20' AS DATE)
+    ,N'Karachi'
+    ,N'Sindh'
+    ,N'Pakistan'
+    ,N'Asia'
+    )
+    ,(
+    6
+    ,N'Sukhjeet'
+    ,N'Singh'
+    ,N'TV'
+    ,2
+    ,900
+    ,CAST(N'2015-06-21' AS DATE)
+    ,N'ChandiGar'
+    ,N'Punjab'
+    ,N'India'
+    ,N'Asia'
+    )
+    ,(
+    7
+    ,N'Chirag'
+    ,N'Patel'
+    ,N'Cell Phone'
+    ,5
+    ,1500
+    ,CAST(N'2015-06-23' AS DATE)
+    ,N'AhmadAbad'
+    ,N'Gujrat'
+    ,N'India'
+    ,N'Asia'
+    )
+    ,(
+    8
+    ,N'Aleena'
+    ,N'Aman'
+    ,N'Laptop'
+    ,2
+    ,800
+    ,CAST(N'2015-05-25' AS DATE)
+    ,N'Lahore'
+    ,N'Punjab'
+    ,N'Pakistan'
+    ,N'Asia'
+    )
+    ,(
+    9
+    ,N'Petra'
+    ,N'Henry'
+    ,N'TV'
+    ,10
+    ,5000
+    ,CAST(N'2015-04-08' AS DATE)
+    ,N'Paris'
+    ,N'Île-de-France'
+    ,N'France'
+    ,N'Europe'
+    )
+    ,(
+    10
+    ,N'Rita'
+    ,N'Roger'
+    ,N'Laptop'
+    ,7
+    ,2100
+    ,CAST(N'2015-04-11' AS DATE)
+    ,N'Paris'
+    ,N'Île-de-France'
+    ,N'France'
+    ,N'Europe'
+    )
+    ,(
+    11
+    ,N'Tamara'
+    ,N'Tony'
+    ,N'Cell Phone'
+    ,2
+    ,1200
+    ,CAST(N'2015-03-03' AS DATE)
+    ,N'Frankfurt'
+    ,N'Hesse'
+    ,N'Germany'
+    ,N'Europe'
+    )
